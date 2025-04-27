@@ -1,7 +1,8 @@
 #!/bin/bash
 mkdir -p build/html
 
-for file in docs/*.tex; do
+# Loop through the .tex files directly in the repo root
+for file in *.tex; do
     filename=$(basename "$file" .tex)
     pandoc "$file" -s --mathjax --toc -o "build/html/${filename}.html"
 done

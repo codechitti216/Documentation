@@ -8,7 +8,6 @@ import os
 if not os.path.exists('build/manifest.json'):
     raise FileNotFoundError("The manifest.json file is missing. Did you run ./build.sh?")
 
-# If the file exists, open it
 with open('build/manifest.json') as f:
     manifest_data = f.read()
 
