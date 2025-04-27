@@ -2,6 +2,16 @@ import json
 import streamlit as st
 from streamlit.components.v1 import html
 
+import os
+
+# Ensure the file exists
+if not os.path.exists('build/manifest.json'):
+    raise FileNotFoundError("The manifest.json file is missing. Did you run ./build.sh?")
+
+# If the file exists, open it
+with open('build/manifest.json') as f:
+    manifest_data = f.read()
+
 # Load manifest
 with open("build/manifest.json") as f:
     pages = json.load(f)
