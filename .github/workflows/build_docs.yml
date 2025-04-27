@@ -1,23 +1,26 @@
-name: CI — Docs
+name: Build Documentation
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  markdown:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Link Check
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-
-      - name: Markdown Lint
-        uses: DavidAnson/markdownlint-cli2-action@v19
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          globs: |
-            docs/**/*.md
-            README.md
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install streamlit python-frontmatter
+
+      - name: Run Streamlit app (test)
+        run: |
+          streamlit run streamlit_app/app.py --server.headless true
