@@ -5,22 +5,26 @@ import frontmatter
 
 st.set_page_config(page_title="ML Documentation", layout="wide")
 
+import streamlit as st
+import glob, os, frontmatter
+
+# make glob absolute, regardless of where we run `streamlit run`
+BASE_DIR = os.path.dirname(__file__)               # …/streamlit_app
+DOCS_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "docs"))
+
 def load_docs():
-    doc_files = sorted(glob.glob("docs/**/*.md", recursive=True))
+    pattern = os.path.join(DOCS_DIR, "**", "*.md")
+    doc_files = sorted(glob.glob(pattern, recursive=True))
     docs = []
     for path in doc_files:
         with open(path, "r", encoding="utf-8") as f:
             post = frontmatter.load(f)
-            title = post.get("title", os.path.splitext(os.path.basename(path))[0].replace("_", " ").title())
-            tags = post.get("tags", [])
-            docs.append({
-                "path": path,
-                "title": title,
-                "tags": tags,
-                "body": post.content,
-                "slug": os.path.splitext(os.path.relpath(path, "docs"))[0].replace("\\", "/")
-            })
+        # now metadata is detected, because `---` was un-indented
+        title = post.get("title", ...)
+        tags  = post.get("tags", [])
+        docs.append({ "title": title, "tags": tags, ... })
     return docs
+
 
 docs = load_docs()
 
