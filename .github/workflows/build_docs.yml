@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install streamlit python-frontmatter
+          pip install -r requirements.txt
 
       - name: Run Streamlit app (test)
         run: |
