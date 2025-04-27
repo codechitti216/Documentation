@@ -3,9 +3,6 @@ import glob
 import os
 import frontmatter
 
-st.markdown(clean_body, unsafe_allow_html=False)
-
-
 # Page layout
 st.set_page_config(page_title="ML Documentation", layout="wide")
 
